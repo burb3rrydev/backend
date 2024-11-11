@@ -8,6 +8,7 @@ const authRoutes = require('./routes/auth'); // Routes for authentication-relate
 const shoesRoute = require('./routes/shoes'); // Routes for shoe-related endpoints
 const checkoutRoutes = require('./routes/checkout'); // Routes for checkout-related endpoints
 
+
 // Load environment variables from .env file
 dotenv.config();
 

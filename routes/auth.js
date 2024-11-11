@@ -3,6 +3,29 @@ const express = require('express'); // Express framework for building web applic
 const router = express.Router(); // Create a new router instance
 const db = require('../config/db'); // Import database configuration
 const bcrypt = require('bcrypt'); // Import bcrypt for password hashing
+const jwt = require('jsonwebtoken'); // Add JWT library
+
+// POST admin login route
+router.post('/admin/login', (req, res) => {
+    const { username, password } = req.body;
+
+    const query = 'SELECT * FROM admins WHERE username = ?';
+
+    db.query(query, [username], (err, results) => {
+        if (err) return res.status(500).send({ success: false, message: 'Database error' });
+
+        if (results.length > 0) {
+            const admin = results[0];
+
+            // Directly compare the passwords (no bcrypt)
+            if (password === admin.password) {
+                return res.status(200).send({ success: true, message: 'Login successful' });
+            }
+        }
+        return res.status(401).send({ success: false, message: 'Invalid credentials' });
+    });
+});
+
 
 // POST signup route to register a new user
 router.post('/signup', async (req, res) => {
@@ -66,6 +89,8 @@ router.post('/login', async (req, res) => {
         return res.status(401).send({ success: false });
     });
 });
+
+
 
 // Export the router to be used in other parts of the application
 module.exports = router;
