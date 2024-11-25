@@ -15,6 +15,8 @@ dotenv.config();
 // Create an instance of the Express application
 const app = express(); // Move this before route usage
 
+
+
 // Use middleware
 app.use(cors()); // Enable CORS for all routes
 app.use(bodyParser.json()); // Parse incoming JSON requests

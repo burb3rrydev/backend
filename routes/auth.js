@@ -5,26 +5,28 @@ const db = require('../config/db'); // Import database configuration
 const bcrypt = require('bcrypt'); // Import bcrypt for password hashing
 const jwt = require('jsonwebtoken'); // Add JWT library
 
-// POST admin login route
+// POST login route for admin authentication
 router.post('/admin/login', (req, res) => {
     const { username, password } = req.body;
 
+    // SQL query to find the admin by username
     const query = 'SELECT * FROM admins WHERE username = ?';
-
     db.query(query, [username], (err, results) => {
-        if (err) return res.status(500).send({ success: false, message: 'Database error' });
+        if (err) return res.status(500).send({ success: false }); // Error on query execution
 
         if (results.length > 0) {
-            const admin = results[0];
+            const admin = results[0]; // Get the first admin result
 
-            // Directly compare the passwords (no bcrypt)
-            if (password === admin.password) {
-                return res.status(200).send({ success: true, message: 'Login successful' });
+            // Check if the password matches (no hashing since you want to use plain text passwords)
+            if (admin.password === password) {
+                return res.status(200).send({ success: true });
             }
         }
-        return res.status(401).send({ success: false, message: 'Invalid credentials' });
+
+        return res.status(401).send({ success: false }); // Unauthorized if login fails
     });
 });
+
 
 
 // POST signup route to register a new user

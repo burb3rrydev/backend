@@ -14,6 +14,7 @@ router.get('/shoes', (req, res) => {
     });
 });
 
+
 // Add a new shoe (Admin only)
 router.post('/admin/shoes', (req, res) => {
     const { name, image_url, size, brand, category, price } = req.body;
@@ -33,9 +34,14 @@ router.put('/admin/shoes/:id', (req, res) => {
     
     db.query(query, [name, image_url, size, brand, category, price, id], (err, results) => {
         if (err) return res.status(500).json({ message: 'Failed to update shoe' });
-        res.status(200).json({ message: 'Shoe updated successfully' });
+        if (results.affectedRows > 0) {
+            res.status(200).json({ message: 'Shoe updated successfully' });
+        } else {
+            res.status(404).json({ message: 'Shoe not found' });
+        }
     });
 });
+
 
 // Delete a shoe (Admin only)
 router.delete('/admin/shoes/:id', (req, res) => {
@@ -50,3 +56,5 @@ router.delete('/admin/shoes/:id', (req, res) => {
 
 
 module.exports = router;
+
+
