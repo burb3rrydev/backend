@@ -2,7 +2,7 @@
 const express = require('express'); // Express framework for building web applications
 const router = express.Router(); // Create a new router instance
 const db = require('../config/db'); // Import database configuration
-const bcrypt = require('bcrypt'); // Import bcrypt for password hashing
+const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken'); // Add JWT library
 
 // POST login route for admin authentication
