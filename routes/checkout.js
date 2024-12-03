@@ -24,8 +24,8 @@ router.post('/create-checkout-session', async (req, res) => {
             payment_method_types: ['card'],
             line_items: lineItems,
             mode: 'payment',
-            success_url: 'https://flyshoes-frontend-d4a16ae44cdf.herokuapp.com/success', // Redirect to success page
-            cancel_url: 'https://flyshoes-frontend-d4a16ae44cdf.herokuapp.com/cancel', // Redirect to cancel page
+            success_url: 'http://localhost:3000/success', // Redirect to success page
+            cancel_url: 'http://localhost:3000/cancel', // Redirect to cancel page
         });
 
         res.json({ id: session.id });
